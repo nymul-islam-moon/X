@@ -1,12 +1,16 @@
-<x-mail::message>
-# Introduction
+@component('mail::message')
+# Hello {{ $user->name }},
 
-The body of your message.
+Thank you for registering as an admin.
 
-<x-mail::button :url="''">
-Button Text
-</x-mail::button>
+Please verify your email address by clicking the button below. You **must** verify your email before you can log in.
+
+@component('mail::button', ['url' => $verificationUrl])
+Verify Email
+@endcomponent
+
+If you did not create this account, no further action is required.
 
 Thanks,<br>
 {{ config('app.name') }}
-</x-mail::message>
+@endcomponent

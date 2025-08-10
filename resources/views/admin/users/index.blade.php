@@ -74,12 +74,12 @@
 
                                             <td>
                                                 <!-- Edit Button -->
-                                                <a href="{{ route('admin.categories.edit', $admin->id) }}"
+                                                {{-- <a href="{{ route('admin.categories.edit', $admin->id) }}"
                                                     class="btn btn-sm btn-primary" title="Edit admin">
                                                     <i class="bi bi-pencil"></i>
-                                                </a>
+                                                </a> --}}
                                                 <!-- Delete Button -->
-                                                <form action="{{ route('admin.categories.destroy', $admin->id) }}"
+                                                <form action="{{ route('admin.users.destroy', $admin->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')

@@ -20,9 +20,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::where('id', '!=', auth()->id())->paginate(5);
+        $currentAdminId = auth('admin')->id();
+        $admins = Admin::where('id', '!=', $currentAdminId)->paginate(5);
+
         return view('admin.users.index', compact('admins'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -88,8 +91,23 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy(Admin $user)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $user->delete();
+            DB::commit();
+
+            return redirect()->route('admin.users.index');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            // Optional: log the actual error
+            Log::error('Admin User deletion failed: ' . $e->getMessage());
+
+            return redirect()->back()
+                ->with('error', 'Something went wrong while deleting the admin user.');
+        }
     }
 }
