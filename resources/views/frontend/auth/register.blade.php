@@ -60,10 +60,10 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Login Page</h2>
+                        <h2>Register</h2>
                         <div class="breadcrumb__option">
-                            <a href="">Home</a>
-                            <span>Login</span>
+                            <a href="{{ url('/') }}">Home</a>
+                            <span>Register</span>
                         </div>
                     </div>
                 </div>
@@ -72,35 +72,62 @@
     </section>
     <!-- Breadcrumb Section End -->
 
-    <!-- Login Form Begin -->
+    <!-- Register Form Begin -->
     <div class="contact-form spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="contact__form__title">
-                        <h2>Login to Your Account</h2>
+                        <h2>Create Your Account</h2>
                     </div>
                 </div>
             </div>
-            <form action="" method="POST">
+            <form method="POST" action="{{ route('frontend.register.store') }}">
+                @method('POST')
                 @csrf
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
-                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="text" name="first_name" placeholder="First Name" value="{{ old('first_name') }}" required>
+                        @error('first_name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <input type="password" name="password" placeholder="Your Password" required>
+                        <input type="text" name="last_name" placeholder="Last Name" value="{{ old('last_name') }}" required>
+                        @error('last_name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
-                  
+                    <div class="col-lg-6 col-md-6">
+                        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="text" name="phone" placeholder="Phone Number" value="{{ old('phone') }}">
+                        @error('phone')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="password" name="password" placeholder="Password" required>
+                        @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                    </div>
                     <div class="col-lg-12 text-center mt-3">
-                        <button type="submit" class="site-btn">Login</button>
-                        <p class="mt-3">Don't have an account? 
-                            <a href="{{ route('frontend.register.index') }}" class="text-primary">Register here</a>
+                        <button type="submit" class="site-btn">Register</button>
+                        <p class="mt-3">Already have an account? 
+                            <a href="{{ route('frontend.login.index') }}" class="text-primary">Login here</a>
                         </p>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <!-- Login Form End -->
+    <!-- Register Form End -->
 @endsection
