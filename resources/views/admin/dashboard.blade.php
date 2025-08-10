@@ -1,5 +1,4 @@
-{{-- resources/views/admin/dashboard.blade.php --}}
-@extends('admin.layouts.app')
+@extends('layouts.admin.app')
 
 @section('title', 'Admin Dashboard')
 
@@ -19,20 +18,12 @@
                     </ol>
                 </div>
             </div>
-            <!--end::Row-->
         </div>
-        <!--end::Container-->
     </div>
-    <!--end::App Content Header-->
-    <!--begin::App Content-->
     <div class="app-content">
-        <!--begin::Container-->
         <div class="container-fluid">
-            <!--begin::Row-->
             <div class="row">
-                <!--begin::Col-->
                 <div class="col-lg-3 col-6">
-                    <!--begin::Small Box Widget 1-->
                     <div class="small-box text-bg-primary">
                         <div class="inner">
                             <h3>150</h3>

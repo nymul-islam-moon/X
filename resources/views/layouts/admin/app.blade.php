@@ -60,20 +60,18 @@
 </head>
 
 <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
-    <div class="app-wrapper">
-
-        <x-admin.navbar />
-
-        <x-admin.sidebar />
-
-        <main class="app-main">
-            @yield('admin_content')
-        </main>
-
-        <x-admin.footer />
-
-    </div>
-
+    @if (auth('admin')->guest())
+        @yield('guest_content')
+    @else
+        <div class="app-wrapper">
+            <x-admin.navbar />
+            <x-admin.sidebar />
+            <main class="app-main">
+                @yield('admin_content')
+            </main>
+            <x-admin.footer />
+        </div>
+    @endif
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
         crossorigin="anonymous"></script>
     <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->

@@ -1,5 +1,5 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
-@extends('admin.layouts.app')
+@extends('layouts.admin.app')
 
 @section('title', 'Product Category')
 

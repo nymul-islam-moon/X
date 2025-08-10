@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreAdminRequest;
 use Illuminate\Http\Request;
 
 class AuthenticateAdminController extends Controller
@@ -23,16 +24,29 @@ class AuthenticateAdminController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(Request $request)
+    public function login(StoreAdminRequest $request)
     {
-        $credentials = $request->only('email', 'password');
+        // Get validated data from the form
+        $formData = $request->validated();
 
+        // Extract only the email and password from the validated data
+        $credentials = [
+            'email' => $formData['email'],
+            'password' => $formData['password'],
+        ];
+
+        // Debug: Check the credentials being passed (optional)
+        // dd($credentials);
+
+        // Attempt login using the admin guard
         if (auth()->guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard.index');
         }
 
+        // Return back with error if login fails
         return back()->withErrors(['email' => 'Invalid credentials.']);
     }
+
 
     /**
      * Handle the registration request for admin.
@@ -56,6 +70,27 @@ class AuthenticateAdminController extends Controller
 
         auth()->guard('admin')->login($admin);
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.dashboard.index');
+    }
+
+    /**
+     * Handle the logout request for admin.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
+        // Log out the admin user using the admin guard
+        auth()->guard('admin')->logout();
+
+        // Invalidate the current session
+        $request->session()->invalidate();
+
+        // Regenerate the session token to prevent session fixation attacks
+        $request->session()->regenerateToken();
+
+        // Redirect to the admin login page
+        return redirect()->route('admin.login');
     }
 }

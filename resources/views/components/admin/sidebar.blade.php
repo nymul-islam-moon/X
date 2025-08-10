@@ -60,7 +60,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.categories.index') }}"
+                            <a href=""
                                 class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Category</p>
@@ -68,7 +68,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.subcategories.index') }}"
+                            <a href=""
                                 class="nav-link {{ request()->routeIs('admin.subcategories.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>SubCategory</p>
@@ -76,7 +76,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.childcategories.index') }}"
+                            <a href=""
                                 class="nav-link {{ request()->routeIs('admin.childcategories.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>ChildCategory</p>
@@ -84,7 +84,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.brands.index') }}"
+                            <a href=""
                                 class="nav-link {{ request()->routeIs('admin.brands.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Brand</p>
@@ -92,7 +92,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.attributes.index') }}"
+                            <a href=""
                                 class="nav-link {{ request()->routeIs('admin.attributes.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Attributes</p>
@@ -100,7 +100,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.products.index') }}"
+                            <a href=""
                                 class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Products</p>

@@ -9,7 +9,7 @@
                 </a>
             </li>
             <li class="nav-item d-none d-md-block">
-                <a href="{{ route('admin.dashboard') }}" class="nav-link">Home</a>
+                <a href="" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-md-block">
                 <a href="#" class="nav-link">Contact</a>
@@ -181,7 +181,10 @@
                     <!--begin::Menu Footer-->
                     <li class="user-footer">
                         <a href="#" class="btn btn-default btn-flat">Profile</a>
-                        <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                        <form action="{{ route('admin.logout.submit') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-default btn-flat float-end">Sign out</button>
+                        </form>
                     </li>
                     <!--end::Menu Footer-->
                 </ul>
