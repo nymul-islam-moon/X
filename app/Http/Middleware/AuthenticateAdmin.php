@@ -15,7 +15,7 @@ class AuthenticateAdmin
             if ($request->expectsJson()) {
                 return response()->json(['message' => 'Unauthenticated.'], 401);
             }
-            // return redirect()->route('admin.login');
+            // return redirect()->route('admin.login.index');
         }
 
         return $next($request);

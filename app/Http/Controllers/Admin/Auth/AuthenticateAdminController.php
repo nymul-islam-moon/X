@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreAdminRequest;
+use App\Http\Requests\Admin\LoginAdminRequest;
 use Illuminate\Http\Request;
 
 class AuthenticateAdminController extends Controller
@@ -29,10 +29,12 @@ class AuthenticateAdminController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(StoreAdminRequest $request)
+    public function login(LoginAdminRequest $request)
     {
         // Get validated data from the form
         $formData = $request->validated();
+
+        // dd($formData);
 
         // Extract only the email and password from the validated data
         $credentials = [
@@ -96,6 +98,6 @@ class AuthenticateAdminController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect to the admin login page
-        return redirect()->route('admin.login');
+        return redirect()->route('admin.login.index');
     }
 }

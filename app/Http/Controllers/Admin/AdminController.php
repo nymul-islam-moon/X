@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAdminRequest;
 use App\Http\Requests\Admin\UpdateAdminRequest;
 use App\Models\Admin;
+use Illuminate\Support\Str;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -32,7 +37,28 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        //
+
+        DB::beginTransaction();
+        try {
+            $formData = $request->validated();
+            $formData['password'] = Hash::make('pA$$W0rd');
+
+            Admin::create($formData);
+
+            DB::commit();
+
+            return redirect()->route('admin.users.index')
+                ->with('success', 'Admin User created successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            // Optional: log the actual error
+            Log::error('Admin User creation failed: ' . $e->getMessage());
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Something went wrong while creating the admin user.');
+        }
     }
 
     /**
