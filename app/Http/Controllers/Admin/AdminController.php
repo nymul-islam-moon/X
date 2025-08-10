@@ -9,12 +9,14 @@ use App\Models\Admin;
 
 class AdminController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $admins = Admin::where('id', '!=', auth()->id())->paginate(5);
+        return view('admin.users.index', compact('admins'));
     }
 
     /**
@@ -22,7 +24,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
