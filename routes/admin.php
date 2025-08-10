@@ -9,8 +9,12 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 // Public admin routes (no auth)
-Route::get('/login', [AuthenticateAdminController::class, 'showLoginPage'])->name('login.index');
-Route::post('/login', [AuthenticateAdminController::class, 'login'])->name('login.submit');
+Route::get('/admin/login', [AuthenticateAdminController::class, 'showLoginForm'])
+    ->name('login.index');
+
+Route::post('/admin/login', [AuthenticateAdminController::class, 'login'])
+    ->name('login.submit');
+
 
 Route::middleware('auth:admin')->group(function () {
     Route::post('/logout', [AuthenticateAdminController::class, 'logOut'])->name('logout.submit');
