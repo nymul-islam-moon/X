@@ -101,7 +101,11 @@
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="{{ route('frontend.login.index') }}"><i class="fa fa-user"></i> Login</a>
+                                @if(Auth::check())
+                                    <a href="#"><i class="fa fa-user"></i> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a>
+                                @else
+                                    <a href="{{ route('frontend.login.index') }}"><i class="fa fa-user"></i> Login</a>
+                                @endif
                             </div>
                         </div>
                     </div>

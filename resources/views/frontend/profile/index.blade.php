@@ -28,7 +28,7 @@
             </div>
             <div class="col-lg-9">
                 <div class="hero__search">
-                    <!-- Optional search/phone here -->
+                    <!-- Keep your search/phone blocks here if needed -->
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <div class="breadcrumb__text">
                     <h2>My Profile</h2>
                     <div class="breadcrumb__option">
-                        <a href="#">Home</a>
+                        <a href="">Home</a>
                         <span>Profile</span>
                     </div>
                 </div>
@@ -54,221 +54,193 @@
 </section>
 <!-- Breadcrumb Section End -->
 
-<!-- Profile Tabs Section Begin -->
+<!-- Profile Section Begin -->
 <section class="profile spad">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
 
-                <div class="profile-tabs card shadow-sm p-4 rounded-4 bg-white">
+            <div class="col-lg-8">
+                <div class="contact__form__title mb-4 text-center">
+                    <h2>Your Profile Details</h2>
+                </div>
 
-                    <!-- Tab Buttons -->
-                    <ul class="nav nav-tabs mb-4" id="profileTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active fw-bold" id="view-tab" data-bs-toggle="tab" data-bs-target="#view" type="button" role="tab" aria-controls="view" aria-selected="true">
-                                Profile Overview
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link fw-bold" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="edit" aria-selected="false">
-                                Edit Profile
-                            </button>
-                        </li>
-                    </ul>
+                @if(session('success'))
+                    <div class="alert alert-success rounded-pill">{{ session('success') }}</div>
+                @endif
+                @if(session('error'))
+                    <div class="alert alert-danger rounded-pill">{{ session('error') }}</div>
+                @endif
 
-                    <!-- Tab Contents -->
-                    <div class="tab-content" id="profileTabContent">
-
-                        <!-- Profile Overview Tab -->
-                        <div class="tab-pane fade show active" id="view" role="tabpanel" aria-labelledby="view-tab">
-                            <div class="d-flex flex-column flex-md-row align-items-center gap-4 mb-4">
-
-                                {{-- Avatar --}}
-                                <div class="profile-avatar rounded-circle overflow-hidden shadow" style="width:130px; height:130px;">
-                                    <img 
-                                        src="{{ auth()->user()->profile_photo_url ?? asset('frontend/img/default-avatar.png') }}" 
-                                        alt="User Avatar" 
-                                        style="width:100%; height:100%; object-fit:cover;">
-                                </div>
-
-                                {{-- User info --}}
-                                <div class="flex-grow-1">
-                                    <h3 class="mb-1">{{ auth()->user()->name }}</h3>
-                                    <p class="text-muted mb-2"><i class="fa fa-envelope me-2"></i>{{ auth()->user()->email }}</p>
-                                    @if(auth()->user()->phone)
-                                        <p class="text-muted mb-2"><i class="fa fa-phone me-2"></i>{{ auth()->user()->phone }}</p>
-                                    @endif
-                                    <p class="text-muted mb-0"><i class="fa fa-calendar-alt me-2"></i>Joined on {{ auth()->user()->created_at->format('M d, Y') }}</p>
-                                </div>
-                            </div>
-
-                            <hr class="my-4">
-
-                            <div>
-                                <h5 class="mb-3 fw-semibold border-bottom pb-2">Account Details</h5>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <strong>Full Name:</strong> <br> {{ auth()->user()->name }}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <strong>Email:</strong> <br> {{ auth()->user()->email }}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <strong>Phone:</strong> <br> {{ auth()->user()->phone ?? 'Not set' }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Edit Profile Tab -->
-                        <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
-                            @if(session('success'))
-                                <div class="alert alert-success rounded-pill">{{ session('success') }}</div>
-                            @endif
-                            @if(session('error'))
-                                <div class="alert alert-danger rounded-pill">{{ session('error') }}</div>
-                            @endif
-
-                            <form action="" method="POST" class="profile-form">
-                                @csrf
-                                @method('PUT')
-
-                                <div class="row g-4">
-
-                                    <div class="col-md-6">
-                                        <label for="name" class="form-label fw-semibold">Full Name</label>
-                                        <input 
-                                            type="text" 
-                                            name="name" 
-                                            id="name" 
-                                            class="form-control form-control-lg @error('name') is-invalid @enderror" 
-                                            value="{{ old('name', auth()->user()->name) }}" 
-                                            placeholder="Your full name"
-                                            required>
-                                        @error('name')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label for="email" class="form-label fw-semibold">Email Address</label>
-                                        <input 
-                                            type="email" 
-                                            name="email" 
-                                            id="email" 
-                                            class="form-control form-control-lg @error('email') is-invalid @enderror" 
-                                            value="{{ old('email', auth()->user()->email) }}" 
-                                            placeholder="Your email address"
-                                            required>
-                                        @error('email')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label for="phone" class="form-label fw-semibold">Phone Number</label>
-                                        <input 
-                                            type="text" 
-                                            name="phone" 
-                                            id="phone" 
-                                            class="form-control form-control-lg @error('phone') is-invalid @enderror" 
-                                            value="{{ old('phone', auth()->user()->phone ?? '') }}" 
-                                            placeholder="Your phone number">
-                                        @error('phone')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-6"></div>
-
-                                    <div class="col-md-6">
-                                        <label for="password" class="form-label fw-semibold">New Password <small class="text-muted">(Leave blank if no change)</small></label>
-                                        <input 
-                                            type="password" 
-                                            name="password" 
-                                            id="password" 
-                                            class="form-control form-control-lg @error('password') is-invalid @enderror" 
-                                            placeholder="********">
-                                        @error('password')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label for="password_confirmation" class="form-label fw-semibold">Confirm Password</label>
-                                        <input 
-                                            type="password" 
-                                            name="password_confirmation" 
-                                            id="password_confirmation" 
-                                            class="form-control form-control-lg" 
-                                            placeholder="********">
-                                    </div>
-
-                                    <div class="col-12 text-center mt-4">
-                                        <button type="submit" class="site-btn px-5 py-3 fw-semibold">
-                                            Update Profile
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </form>
-
-                            <hr class="my-5">
-
-                            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                                <form action="" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger px-4 py-2 fw-semibold rounded-pill">
-                                        <i class="fa fa-sign-out me-2"></i> Logout
-                                    </button>
-                                </form>
-
-                                <form action="" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger px-4 py-2 fw-semibold rounded-pill">
-                                        <i class="fa fa-trash me-2"></i> Delete Account
-                                    </button>
-                                </form>
-                            </div>
-
-                        </div>
+                <div class="d-flex flex-column flex-md-row align-items-center mb-5 gap-4">
+                    {{-- User Avatar --}}
+                    <div class="profile-avatar rounded-circle overflow-hidden shadow" style="width:120px; height:120px; flex-shrink:0;">
+                        <img 
+                            src="{{ auth()->user()->profile_photo_url ?? asset('frontend/img/default-avatar.png') }}" 
+                            alt="User Avatar" 
+                            style="width:100%; height:100%; object-fit:cover;">
                     </div>
 
+                    {{-- User Name and Email --}}
+                    <div class="profile-info">
+                        <h3 class="mb-1">{{ auth()->user()->name }}</h3>
+                        <p class="text-muted mb-0"><i class="fa fa-envelope"></i> {{ auth()->user()->email }}</p>
+                        @if(auth()->user()->phone)
+                            <p class="text-muted"><i class="fa fa-phone"></i> {{ auth()->user()->phone }}</p>
+                        @endif
+                    </div>
+                </div>
+
+                <form action="" method="POST" class="profile-form">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label fw-semibold">First Name</label>
+                            <input 
+                                type="text" 
+                                name="first_name" 
+                                id="first_name" 
+                                class="form-control form-control-lg @error('first_name') is-invalid @enderror" 
+                                value="{{ old('first_name', auth()->user()->first_name) }}" 
+                                placeholder="Enter your first name"
+                                required>
+                            @error('first_name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="last_name" class="form-label fw-semibold">Last Name</label>
+                            <input 
+                                type="text" 
+                                name="last_name" 
+                                id="last_name" 
+                                class="form-control form-control-lg @error('last_name') is-invalid @enderror" 
+                                value="{{ old('last_name', auth()->user()->last_name) }}" 
+                                placeholder="Enter your last name"
+                                required>
+                            @error('last_name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="email" class="form-label fw-semibold">Email Address</label>
+                            <input 
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                class="form-control form-control-lg @error('email') is-invalid @enderror" 
+                                value="{{ old('email', auth()->user()->email) }}" 
+                                placeholder="Enter your email address"
+                                required>
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                            <input 
+                                type="text" 
+                                name="phone" 
+                                id="phone" 
+                                class="form-control form-control-lg @error('phone') is-invalid @enderror" 
+                                value="{{ old('phone', auth()->user()->phone ?? '') }}" 
+                                placeholder="Enter your phone number">
+                            @error('phone')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label for="password" class="form-label fw-semibold">New Password <small class="text-muted">(Leave blank if no change)</small></label>
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                class="form-control form-control-lg @error('password') is-invalid @enderror" 
+                                placeholder="********">
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="password_confirmation" class="form-label fw-semibold">Confirm Password</label>
+                            <input 
+                                type="password" 
+                                name="password_confirmation" 
+                                id="password_confirmation" 
+                                class="form-control form-control-lg" 
+                                placeholder="********">
+                        </div>
+
+                        <div class="col-12 text-center mt-4">
+                            <button type="submit" class="site-btn px-5 py-3 fw-bold">
+                                Update Profile
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <hr class="my-5">
+
+                <div class="d-flex justify-content-between flex-wrap gap-3">
+                    <form action="" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-danger px-4 py-2 fw-semibold rounded-pill">
+                            <i class="fa fa-sign-out me-2"></i> Logout
+                        </button>
+                    </form>
+
+                    <form action="" method="POST" 
+                        onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');"
+                        class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger px-4 py-2 fw-semibold rounded-pill">
+                            <i class="fa fa-trash me-2"></i> Delete Account
+                        </button>
+                    </form>
                 </div>
 
             </div>
         </div>
     </div>
 </section>
-<!-- Profile Tabs Section End -->
+<!-- Profile Section End -->
 
 <style>
-    .profile-tabs {
-        background-color: #fff;
+    /* Add subtle shadow and border radius to inputs */
+    .profile-form .form-control {
+        border-radius: 8px;
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .profile-form .form-control:focus {
+        border-color: #ff6f61;
+        box-shadow: 0 0 8px rgba(255,111,97,0.5);
     }
     .profile-avatar img {
         border-radius: 50%;
         border: 3px solid #ff6f61;
-        width: 130px;
-        height: 130px;
-        object-fit: cover;
         transition: transform 0.3s ease;
     }
     .profile-avatar img:hover {
         transform: scale(1.1);
     }
     .site-btn {
-        background: linear-gradient(90deg, #ff6f61, #ff3b2e);
-        color: #fff;
+        background-color: #ff6f61;
         border: none;
         border-radius: 50px;
         font-weight: 600;
-        transition: background 0.3s ease;
+        transition: background-color 0.3s ease;
     }
     .site-btn:hover {
-        background: linear-gradient(90deg, #ff3b2e, #ff6f61);
-        color: #fff;
+        background-color: #e55a4e;
     }
     .btn-danger, .btn-outline-danger {
         border-radius: 50px;
@@ -284,15 +256,5 @@
         color: #fff !important;
         border-color: #d94a3a !important;
     }
-    /* Bootstrap 5 override for active tab font-weight */
-    .nav-tabs .nav-link.active {
-        color: #ff3b2e;
-        border-color: #ff3b2e #ff3b2e #fff;
-    }
-    .form-label {
-        font-weight: 600;
-    }
 </style>
-
-<!-- Make sure Bootstrap 5 JS is loaded for tabs to work -->
 @endsection
