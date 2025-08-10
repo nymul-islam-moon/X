@@ -13,11 +13,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * Guard Admin
-     */
-    protected $guard = 'admin';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>

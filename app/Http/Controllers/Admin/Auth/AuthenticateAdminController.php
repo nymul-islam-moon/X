@@ -15,8 +15,13 @@ class AuthenticateAdminController extends Controller
      */
     public function showLoginPage()
     {
+        if (auth('admin')->check()) {
+            return redirect()->route('admin.dashboard.index');
+        }
+
         return view('auth.admin.login');
     }
+
 
     /**
      * Handle the login request for admin.
